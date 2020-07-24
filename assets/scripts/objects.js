@@ -24,7 +24,9 @@ const renderMovies = (filter = "") => {
    filteredMovies.forEach((movie) => {
       const movieEl = document.createElement("li");
       const { info, ...otherProps } = movie;
-      let text = info.title;
+      let { uppercaseTitle } = movie;
+      uppercaseTitle = uppercaseTitle.bind(movie);
+      let text = uppercaseTitle();
 
       for (const key in info) {
          if (key !== "title") {
@@ -56,6 +58,9 @@ const addMovieHandler = () => {
          [extraName]: extraValue,
       },
       id: Math.random(),
+      uppercaseTitle() {
+         return this.info.title.toUpperCase();
+      },
    };
 
    movies.push(newMovie);
